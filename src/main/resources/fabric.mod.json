@@ -19,7 +19,7 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "net.eduardososa.odmr.OresDropMoresThreeMod"
+      "net.eduardososa.odmr.OdmrMod"
     ]
   },
   "mixins": [

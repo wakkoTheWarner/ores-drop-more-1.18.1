@@ -1,16 +1,18 @@
 package net.eduardososa.odmr.util;
 
+import net.eduardososa.odmr.config.ModConfigs;
 import net.eduardososa.odmr.item.ModItems;
 import net.fabricmc.fabric.api.loot.v1.FabricLootPoolBuilder;
 import net.fabricmc.fabric.api.loot.v1.event.LootTableLoadingCallback;
+import net.minecraft.enchantment.Enchantments;
 import net.minecraft.item.Items;
+import net.minecraft.loot.condition.MatchToolLootCondition;
 import net.minecraft.loot.condition.RandomChanceLootCondition;
 import net.minecraft.loot.entry.ItemEntry;
 import net.minecraft.loot.function.SetCountLootFunction;
 import net.minecraft.loot.provider.number.ConstantLootNumberProvider;
 import net.minecraft.loot.provider.number.UniformLootNumberProvider;
 import net.minecraft.util.Identifier;
-
 
 public class ModLootTableModifiers {
     private static final Identifier COAL_BLOCK_ID
@@ -52,6 +54,9 @@ public class ModLootTableModifiers {
             = new Identifier("minecraft", "blocks/lapis_ore");
     private static final Identifier DEEPSLATE_LAPIZ_BLOCK_ID
             = new Identifier("minecraft", "blocks/deepslate_lapis_ore");
+
+    private static final Identifier ANCIENT_DEBRIS_BLOCK_ID
+            = new Identifier("minecraft", "blocks/ancient_debris");
 
 
     public static void modifyLootTables() {
@@ -137,6 +142,14 @@ public class ModLootTableModifiers {
                 supplier.withPool(poolBuilder.build());
             }
 
+            if (ANCIENT_DEBRIS_BLOCK_ID.equals(id)) {
+                FabricLootPoolBuilder poolBuilder = FabricLootPoolBuilder.builder()
+                        .rolls(ConstantLootNumberProvider.create(1))
+                        .conditionally(RandomChanceLootCondition.builder(1f)) // Drops 100% of the time
+                        .with(ItemEntry.builder(ModItems.ANCIENT_DEBRIS_SHARD))
+                        .withFunction(SetCountLootFunction.builder(UniformLootNumberProvider.create(1.0f, 3.0f)).build());
+                supplier.withPool(poolBuilder.build());
+            }
         }));
     }
 }
